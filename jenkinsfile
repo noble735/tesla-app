@@ -1,0 +1,71 @@
+pipeline{
+	agent any
+	tools {
+		maven "maven3.9.6" 
+	}
+	stages {
+		stage('1cloning'){
+		steps{
+			sh "echo 'cloning the latest application version' "
+			git branch: 'feature', credentialsId: 'gitHubCredentials', url: 'https://github.com/noble735/tesla-app'
+		}
+		}  
+  stage('2Test&Build'){
+  steps{
+  	sh "echo 'running JUnit-test-cases' "
+  	sh "echo 'testing must pass to create artifacts'"
+  	sh "mvn clean package"
+  }
+  }
+  /*  
+stage('3codeQuality'){
+    steps{
+    	sh "echo 'Performing CodeQualityAnalysis' "
+    	sh "mvn sonar:sonar"
+    }
+  }
+  stage('4uploadArtifacts'){
+  	steps{
+  		sh "mvn deploy" 
+  	}
+  }
+   stage('7deploy2Prod'){
+      steps{
+          deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://3.135.227.71:8080/')], contextPath: null, war: 'target/*war'
+      }
+  }
+	}
+  	post{
+		always{
+		    emailext body: '''Hey guys
+Please check build status
+
+Thanks
+Landmark''', recipientProviders: [buildUser(), developers()], subject: 'success', to: 'noble.zika@yahoo.com'
+		}
+		success{
+		    emailext body: '''Hey guys
+Good job build and deployment is successful
+
+Thanks
+Landmark''', recipientProviders: [buildUser(), developers()], subject: 'success', to: 'noble.zika@yahoo.com'
+		}
+		failure{
+		    emailext body: '''Hey guys
+Build failed. Please resolve issues
+
+Thanks
+Landmark''', recipientProviders: [buildUser(), developers()], subject: 'success', to: 'noble.zika@yahoo.com'
+		}
+	}
+
+
+  stage('4uploadArtifacts'){}
+  stage('5deploy2UAT'){}
+  stage('6approvalGate'){}
+ 
+  stage('8emailNotification'){}
+	}
+
+	*/
+}
