@@ -10,6 +10,7 @@ pipeline{
 			git branch: 'feature', credentialsId: 'gitHubCredentials', url: 'https://github.com/noble735/tesla-app'
 		}
 		}  
+}
   stage('2Test&Build'){
   steps{
   	sh "echo 'running JUnit-test-cases' "
